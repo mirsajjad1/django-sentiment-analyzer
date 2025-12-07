@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Welcome to Sentiment Analyzer</h1>
+    <p class="lead">Analyze the sentiment of your text using our tool.</p>
+    <a href="{% url 'app1:analyze_sentiment' %}" class="btn btn-primary">Start Analyzing</a>
+</div>
+{% endblock %}

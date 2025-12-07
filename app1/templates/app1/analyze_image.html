@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Image Analysis</h2>
+    
+    <form method="post" enctype="multipart/form-data" class="mb-4">
+        {% csrf_token %}
+        <div class="mb-3">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Analyze Image</button>
+    </form>
+
+    <h3>Past Analyses</h3>
+    {% if entries %}
+        <div class="row">
+        {% for entry in entries %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ entry.image.url }}" class="card-img-top" alt="Analyzed image">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ entry.result }}</h5>
+                        <p class="card-text">Confidence: {{ entry.confidence|floatformat:2 }}%</p>
+                        <small class="text-muted">{{ entry.created_at|date:"F j, Y, g:i a" }}</small>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No images analyzed yet.</p>
+    {% endif %}
+</div>
+{% endblock %}

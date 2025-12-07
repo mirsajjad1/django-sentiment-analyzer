@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Sentiment Analysis</h2>
+    
+    <form method="post" class="mb-4">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Analyze Sentiment</button>
+    </form>
+
+    <h3>Past Entries</h3>
+    {% if entries %}
+        <div class="list-group">
+        {% for entry in entries %}
+            <div class="list-group-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="mb-1">{{ entry.text }}</p>
+                    <span class="badge {% if entry.sentiment == 'positive' %}bg-success{% elif entry.sentiment == 'negative' %}bg-danger{% else %}bg-secondary{% endif %}">
+                        {{ entry.sentiment }}
+                    </span>
+                </div>
+                <small class="text-muted">{{ entry.created_at|date:"F j, Y, g:i a" }}</small>
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No entries yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
